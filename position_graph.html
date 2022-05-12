@@ -1,0 +1,116 @@
+<html>
+<head>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis.css" type="text/css" />
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis-network.min.js"> </script>
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+
+<style type="text/css">
+
+        #mynetwork {
+            width: 700px;
+            height: 700px;
+            background-color: white;
+            border: 1px solid lightgray;
+            position: relative;
+            float: left;
+        }
+
+        
+
+        
+
+        
+</style>
+
+</head>
+
+<body>
+<div id = "mynetwork"></div>
+
+
+<script type="text/javascript">
+
+    // initialize global variables.
+    var edges;
+    var nodes;
+    var network; 
+    var container;
+    var options, data;
+
+    
+    // This method is responsible for drawing the graph, returns the drawn network
+    function drawGraph() {
+        var container = document.getElementById('mynetwork');
+        
+        
+
+        // parsing and collecting nodes and edges from the python
+        nodes = new vis.DataSet([{"font": {"color": "black"}, "id": "root", "label": "root", "shape": "dot", "size": 10}, {"color": "#3449eb", "font": {"color": "black"}, "id": "Data Scientist", "label": "Data Scientist", "shape": "dot", "size": 81, "title": "81"}, {"color": "#3449eb", "font": {"color": "black"}, "id": "Data Analyst", "label": "Data Analyst", "shape": "dot", "size": 44, "title": "44"}, {"color": "#3449eb", "font": {"color": "black"}, "id": "Senior Data Scientist", "label": "Senior Data Scientist", "shape": "dot", "size": 20, "title": "20"}, {"color": "#3449eb", "font": {"color": "black"}, "id": "Data scientist", "label": "Data scientist", "shape": "dot", "size": 9, "title": "9"}, {"color": "#3449eb", "font": {"color": "black"}, "id": "Data Engineer", "label": "Data Engineer", "shape": "dot", "size": 5, "title": "5"}]);
+        edges = new vis.DataSet([{"color": "grey", "from": "root", "label": 1, "to": "Data Scientist", "weight": 1}, {"color": "grey", "from": "root", "label": 1, "to": "Data Analyst", "weight": 1}, {"color": "grey", "from": "root", "label": 1, "to": "Senior Data Scientist", "weight": 1}, {"color": "grey", "from": "root", "label": 1, "to": "Data scientist", "weight": 1}, {"color": "grey", "from": "root", "label": 1, "to": "Data Engineer", "weight": 1}]);
+
+        // adding nodes and edges to the graph
+        data = {nodes: nodes, edges: edges};
+
+        var options = {
+    "configure": {
+        "enabled": false
+    },
+    "edges": {
+        "color": {
+            "inherit": true
+        },
+        "smooth": {
+            "enabled": false,
+            "type": "continuous"
+        }
+    },
+    "interaction": {
+        "dragNodes": true,
+        "hideEdgesOnDrag": false,
+        "hideNodesOnDrag": false
+    },
+    "physics": {
+        "enabled": true,
+        "hierarchicalRepulsion": {
+            "centralGravity": 0.0,
+            "damping": 0.09,
+            "nodeDistance": 120,
+            "springConstant": 0.01,
+            "springLength": 100
+        },
+        "solver": "hierarchicalRepulsion",
+        "stabilization": {
+            "enabled": true,
+            "fit": true,
+            "iterations": 1000,
+            "onlyDynamicEdges": false,
+            "updateInterval": 50
+        }
+    }
+};
+        
+        
+
+        
+
+        network = new vis.Network(container, data, options);
+	 
+        
+
+
+        
+
+        return network;
+
+    }
+
+    drawGraph();
+
+</script>
+</body>
+</html>

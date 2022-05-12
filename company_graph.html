@@ -1,0 +1,116 @@
+<html>
+<head>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis.css" type="text/css" />
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis-network.min.js"> </script>
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+
+<style type="text/css">
+
+        #mynetwork {
+            width: 700px;
+            height: 700px;
+            background-color: white;
+            border: 1px solid lightgray;
+            position: relative;
+            float: left;
+        }
+
+        
+
+        
+
+        
+</style>
+
+</head>
+
+<body>
+<div id = "mynetwork"></div>
+
+
+<script type="text/javascript">
+
+    // initialize global variables.
+    var edges;
+    var nodes;
+    var network; 
+    var container;
+    var options, data;
+
+    
+    // This method is responsible for drawing the graph, returns the drawn network
+    function drawGraph() {
+        var container = document.getElementById('mynetwork');
+        
+        
+
+        // parsing and collecting nodes and edges from the python
+        nodes = new vis.DataSet([{"font": {"color": "black"}, "id": "root", "label": "root", "shape": "dot", "size": 10}, {"color": "#3449eb", "font": {"color": "black"}, "id": "The Cocktail", "label": "The Cocktail", "shape": "dot", "size": 28, "title": "\u003cb\u003eThe Cocktail\u003c/b\u003e \u2013 14\u003cul\u003e\u003cli\u003eData Scientist\u003c/li\u003e\u003cli\u003eSenior Manager of Data Engineer, Business Intelligence and Data Science\u003c/li\u003e\u003cli\u003eData Engineer\u003c/li\u003e\u003cli\u003eProduct Designer\u003c/li\u003e\u003cli\u003eDigital Analytics Consultant\u003c/li\u003e\u003cli\u003eSenior Strategy Consultant\u003c/li\u003e\u003cli\u003eGrowth Lead\u003c/li\u003e\u003cli\u003eSenior Analytics Engineer\u003c/li\u003e\u003cli\u003eDMP/CDP \u0026 Analytics Consultant\u003c/li\u003e\u003cli\u003eData Analytics Engineer\u003c/li\u003e\u003cli\u003eCRO \u0026 Growth Designer\u003c/li\u003e\u003c/ul\u003e"}, {"color": "#3449eb", "font": {"color": "black"}, "id": "IBM", "label": "IBM", "shape": "dot", "size": 26, "title": "\u003cb\u003eIBM\u003c/b\u003e \u2013 13\u003cul\u003e\u003cli\u003eData Scientist\u003c/li\u003e\u003cli\u003eChief Data Scientist for IBM Consulting Spain\u003c/li\u003e\u003cli\u003eData Strategy \u0026 Data Governance Senior Manager at IBM Consulting\u003c/li\u003e\u003cli\u003eCognitive Consultant | Data Scientist\u003c/li\u003e\u003cli\u003eArtificial Intelligence Consultant\u003c/li\u003e\u003cli\u003eData Scientist \u003c/li\u003e\u003cli\u003eClient Engineering Data Scientist\u003c/li\u003e\u003cli\u003eHead Of Innovation - Spain, Portugal, Greece, Israel\u003c/li\u003e\u003cli\u003eData Scientist - Associate Program\u003c/li\u003e\u003cli\u003eMachine Learning and Full Stack Software Engineering Application Architect\u003c/li\u003e\u003cli\u003eCloud Application Consultant\u003c/li\u003e\u003cli\u003eSenior Data Scientist\u003c/li\u003e\u003cli\u003eIBM Garage Data Scientist\u003c/li\u003e\u003c/ul\u003e"}, {"color": "#3449eb", "font": {"color": "black"}, "id": "Banco Santander", "label": "Banco Santander", "shape": "dot", "size": 22, "title": "\u003cb\u003eBanco Santander\u003c/b\u003e \u2013 11\u003cul\u003e\u003cli\u003eData Scientist\u003c/li\u003e\u003cli\u003eData Scientist - Data Analytics Department, Risk Area\u003c/li\u003e\u003cli\u003eProduct Owner\u003c/li\u003e\u003cli\u003eMethodology Data Analytics \u0026 Models Analyst I\u003c/li\u003e\u003cli\u003eData Scientist \u003c/li\u003e\u003cli\u003eCient\u00edfico de datos\u003c/li\u003e\u003cli\u003eData Analyst\u003c/li\u003e\u003cli\u003eMO Equity Derivatives | Process Automation Support Intern\u003c/li\u003e\u003c/ul\u003e"}, {"color": "#3449eb", "font": {"color": "black"}, "id": "Accenture", "label": "Accenture", "shape": "dot", "size": 22, "title": "\u003cb\u003eAccenture\u003c/b\u003e \u2013 11\u003cul\u003e\u003cli\u003eData Scientist\u003c/li\u003e\u003cli\u003eData Scientist - Supply Chain Analytics\u003c/li\u003e\u003cli\u003eData Science Analytics Analyst\u003c/li\u003e\u003cli\u003eData Scientist Analytics Analyst\u003c/li\u003e\u003cli\u003eAdvanced App Engineering Analyst\u003c/li\u003e\u003cli\u003eData Scientist \u003c/li\u003e\u003cli\u003eData Scientist - Applied Intelligence\u003c/li\u003e\u003cli\u003eData Scientist - Analyst\u003c/li\u003e\u003cli\u003eData Science\u003c/li\u003e\u003cli\u003eConsultant at Accenture Applied Intelligence\u003c/li\u003e\u003c/ul\u003e"}, {"color": "#3449eb", "font": {"color": "black"}, "id": "Deloitte", "label": "Deloitte", "shape": "dot", "size": 16, "title": "\u003cb\u003eDeloitte\u003c/b\u003e \u2013 8\u003cul\u003e\u003cli\u003eRegulatory Risk IT Advisory\u003c/li\u003e\u003cli\u003eData analyst\u003c/li\u003e\u003cli\u003eData scientist - Actuarial \u0026 advanced analytics\u003c/li\u003e\u003cli\u003eAnalyst | SAP SD/FI Consulting\u003c/li\u003e\u003cli\u003eIT Consulting | Supply Chain Management  - Analyst\u003c/li\u003e\u003cli\u003ePartner- Analytics\u003c/li\u003e\u003cli\u003eTechnology Consultant | FSI | SAP Ariba\u003c/li\u003e\u003cli\u003eAnalyst\u003c/li\u003e\u003c/ul\u003e"}, {"color": "#3449eb", "font": {"color": "black"}, "id": "EY", "label": "EY", "shape": "dot", "size": 14, "title": "\u003cb\u003eEY\u003c/b\u003e \u2013 7\u003cul\u003e\u003cli\u003eData Analyst | Data \u0026 Analytics - FSO\u003c/li\u003e\u003cli\u003eMachine Learning Engineer\u003c/li\u003e\u003cli\u003eAudit Senior\u003c/li\u003e\u003cli\u003eData Scientist - EY EMEIA FSO wavespace\u2122 Artificial Intelligence Center\u003c/li\u003e\u003cli\u003eData and Analytics Senior Consultant\u003c/li\u003e\u003cli\u003eData Analyst Assistant\u003c/li\u003e\u003cli\u003eData Analyst\u003c/li\u003e\u003c/ul\u003e"}, {"color": "#3449eb", "font": {"color": "black"}, "id": "McKinsey \u0026 Company", "label": "McKinsey \u0026 Company", "shape": "dot", "size": 12, "title": "\u003cb\u003eMcKinsey \u0026 Company\u003c/b\u003e \u2013 6\u003cul\u003e\u003cli\u003eData Scientist\u003c/li\u003e\u003cli\u003eSenior Data Scientist\u003c/li\u003e\u003c/ul\u003e"}, {"color": "#3449eb", "font": {"color": "black"}, "id": "Cabify", "label": "Cabify", "shape": "dot", "size": 10, "title": "\u003cb\u003eCabify\u003c/b\u003e \u2013 5\u003cul\u003e\u003cli\u003eData Analyst\u003c/li\u003e\u003cli\u003eSenior Data Scientist\u003c/li\u003e\u003cli\u003eAnalista de datos senior\u003c/li\u003e\u003c/ul\u003e"}]);
+        edges = new vis.DataSet([{"color": "grey", "from": "root", "label": 1, "to": "The Cocktail", "weight": 1}, {"color": "grey", "from": "root", "label": 1, "to": "IBM", "weight": 1}, {"color": "grey", "from": "root", "label": 1, "to": "Banco Santander", "weight": 1}, {"color": "grey", "from": "root", "label": 1, "to": "Accenture", "weight": 1}, {"color": "grey", "from": "root", "label": 1, "to": "Deloitte", "weight": 1}, {"color": "grey", "from": "root", "label": 1, "to": "EY", "weight": 1}, {"color": "grey", "from": "root", "label": 1, "to": "McKinsey \u0026 Company", "weight": 1}, {"color": "grey", "from": "root", "label": 1, "to": "Cabify", "weight": 1}]);
+
+        // adding nodes and edges to the graph
+        data = {nodes: nodes, edges: edges};
+
+        var options = {
+    "configure": {
+        "enabled": false
+    },
+    "edges": {
+        "color": {
+            "inherit": true
+        },
+        "smooth": {
+            "enabled": false,
+            "type": "continuous"
+        }
+    },
+    "interaction": {
+        "dragNodes": true,
+        "hideEdgesOnDrag": false,
+        "hideNodesOnDrag": false
+    },
+    "physics": {
+        "enabled": true,
+        "hierarchicalRepulsion": {
+            "centralGravity": 0.0,
+            "damping": 0.09,
+            "nodeDistance": 120,
+            "springConstant": 0.01,
+            "springLength": 100
+        },
+        "solver": "hierarchicalRepulsion",
+        "stabilization": {
+            "enabled": true,
+            "fit": true,
+            "iterations": 1000,
+            "onlyDynamicEdges": false,
+            "updateInterval": 50
+        }
+    }
+};
+        
+        
+
+        
+
+        network = new vis.Network(container, data, options);
+	 
+        
+
+
+        
+
+        return network;
+
+    }
+
+    drawGraph();
+
+</script>
+</body>
+</html>
